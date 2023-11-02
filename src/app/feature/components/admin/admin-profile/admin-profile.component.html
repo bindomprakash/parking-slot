@@ -1,0 +1,142 @@
+<div class="br-mainpanel" style="position: relative;">
+    <div class="br-pagebody">
+        <div class="row row-sm">
+            <div class="col-md-12">
+                <div class="profileContent">
+                    <h3>My Profile</h3>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="profileBg mt-2">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="profileheading">
+                                        Profile Information
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-12 ml-auto">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+                                                            <div class="machineForm">
+                                                                <label>Name</label>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span style="height: 42px;" class="input-group-text" id="basic-addon1"><i class="fa fa-user"
+                                                                                aria-hidden="true"></i></span>
+                                                                    </div>
+
+                                                                    <input type="text" class="form-control" placeholder="Name" formControlName="name" />
+
+                                                                </div>
+                                                                <span *ngIf="profileForm.get('name')?.invalid && (profileForm.get('name')?.dirty || profileForm.get('name')?.touched)" class="text-danger">
+                                                                    <span
+                                                                        *ngIf="profileForm.get('name')?.errors?.['required']">
+                                                                        Name is required.
+                                                                    </span>
+                                                                </span>
+                                                                <div class="machineForm">
+                                                                    <label>Email</label>
+                                                                    <div class="input-group ">
+                                                                        <div class="input-group-prepend">
+                                                                            <span style="height: 42px;" class="input-group-text" id="basic-addon4"><i class="fa fa-envelope"
+                                                                                    aria-hidden="true"></i></span>
+                                                                        </div>
+                                                                        <input type="text" readonly class="form-control" placeholder="Email" formControlName="email" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="machineForm rgt">
+                                                                    <button type="submit" class="primaryButton">
+                                                                        Update Profile
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="profileheading">
+                                        Change Password
+                                        <!-- <div class="editIcon"><i class="fa fa-pencil"></i></div> -->
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-12 ml-auto">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="machineForm">
+                                                                        <label class="control-label">Old Password</label>
+                                                                        <input type="password" formControlName="old_password" class="form-control" placeholder="Old Password" />
+                                                                        <span *ngIf="passwordForm.get('old_password')?.invalid && (passwordForm.get('old_password')?.dirty || passwordForm.get('old_password')?.touched)" class="text-danger">
+                                                                            <span
+                                                                                *ngIf="passwordForm.get('old_password')?.errors?.['required']">
+                                                                                Old password is required.
+                                                                            </span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="machineForm">
+                                                                        <label class="control-label">New Password</label>
+                                                                        <input type="password" formControlName="new_password" class="form-control" placeholder="New Password" />
+                                                                        <span *ngIf="passwordForm.get('new_password')?.invalid && (passwordForm.get('new_password')?.dirty || passwordForm.get('new_password')?.touched)" class="text-danger">
+                                                                            <span
+                                                                                *ngIf="passwordForm.get('new_password')?.errors?.['required']">
+                                                                                New password is required.
+                                                                            </span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="machineForm">
+                                                                        <label class="control-label">Confirm Password</label>
+                                                                        <input type="password" formControlName="confirm_password" class="form-control" placeholder="Confirm Password" appConfirmEqualValidator="new_password" />
+                                                                        <span *ngIf="passwordForm.get('confirm_password')?.invalid && (passwordForm.get('confirm_password')?.dirty || passwordForm.get('confirm_password')?.touched)" class="text-danger">
+                                                                            <span
+                                                                                *ngIf="passwordForm.get('confirm_password')?.errors?.['required']">
+                                                                                Confirm password is required.
+                                                                            </span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="machineForm changeWrapper mt-3">
+                                                                        <button type="submit" class="primaryButton">
+                                                                                Change Password
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

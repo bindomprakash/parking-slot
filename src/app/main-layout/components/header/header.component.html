@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-light ">
+    <div class="container-fluid">
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="barMenu">
+                <i class="fa fa-bars " aria-hidden="true" (click)="isActive()"></i>
+            </div>
+            <ul class="navbar-nav">
+                <li class="dropdown dropdown-user nav-item">
+                    <a class="dropdown-toggle nav-link dropdown-user-link" #toggleButton (click)="show_menu = !show_menu" data-toggle="dropdown" aria-expanded="false"><span class="mr-1"><span class="user-name text-bold-700">{{admin}}</span></span><span
+              class="avatar avatar-online">
+              <!-- <img src="assets/images/avatar-s-19.png" alt="image"/> -->
+              <img class="dropImage" src="assets/images/profile.webp" alt="image" title="Profile" #menu/>
+            </span></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-hidden="false" [ngClass]="show_menu ? 'show' : '' ">
+                        <a title="My Profile" class="dropdown-item" [routerLink]="['/admin-profile']"><i class="fa fa-user" aria-hidden="true"></i> My Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a title="Logout" class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"
+                aria-hidden="true"></i>Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

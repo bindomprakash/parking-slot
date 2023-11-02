@@ -1,0 +1,61 @@
+<div *ngIf="loader" class="spinner-wrapper">
+    <app-loader></app-loader>
+</div>
+<div class="mainSection">
+    <div class="loginSlotWrapper">
+        <div class="loginImageWrapper">
+            <img src="assets/images/loginbannerimg.jpg" alt="login-image" />
+        </div>
+        <div class="main-container">
+            <div class="yourPassword">
+                <img src="assets/images/parkLogo.png" alt="logo-Image">
+                <!-- <h3>Welcome to ParkingSlots</h3> -->
+                <h4>Sign In</h4>
+            </div>
+            <form class="formWrapper" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="mb-2 userName">
+                    <label class="form-label">Email<em class="text-danger">*</em></label>
+                    <input type="text" formControlName="email" placeholder="Enter User Name" class="form-control" />
+                    <i class="fa fa-envelope readName" aria-hidden="true"></i>
+                    <span
+                        *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)"
+                        class="text-danger">
+                        <span *ngIf="loginForm.get('email')?.errors?.['required']">
+                            Email is required.
+                        </span>
+                        <span *ngIf="loginForm.get('email')?.errors?.['email']">
+                            Please enter valid email.
+                        </span>
+                    </span>
+                </div>
+
+                <div class="mb-2 userName">
+                    <label class="form-label">Password<em class="text-danger">*</em></label>
+                    <input type="password" formControlName="password" placeholder="Enter Password" class="form-control"
+                        [type]="show ? 'password' : 'text'" />
+                    <div (click)="password()">
+                        <i class="fa fa-eye readName" aria-hidden="true" *ngIf="!show"></i>
+                        <i class="fa fa-eye-slash readName" aria-hidden="true" *ngIf="show"></i>
+                    </div>
+
+                    <span
+                        *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
+                        class="text-danger">
+                        <span *ngIf="loginForm.get('password')?.errors?.['required']">
+                            Password is required.
+                        </span>
+                    </span>
+                </div>
+
+                <div class="loginButton">
+                    <button class="primaryButton" type="submit">
+                        Sign In
+                    </button>
+                </div>
+                <div class="forgotWrapper">
+                    <a [routerLink]="['/forgot-password']">Forgot password ?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,258 @@
+<div *ngIf="loader" class="spinner-wrapper">
+    <app-loader></app-loader>
+</div>
+<div class="user">
+    <h4>Spot List</h4>
+    <div class="searchField">
+        <input type="search" class="" [(ngModel)]="searchInput.title" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Location</th>
+                <th scope="col">Created By</th>
+                <!-- <th scope="col">Address </th> -->
+                <th scope="col">Phone No. </th>
+                <th scope="col" >Date & Time</th>
+                <th scope="col">Is Active</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of spotListData | orderBy: orderHeader:isDesOrder | filterBy: searchInput | paginate: { itemsPerPage: 10, currentPage: page }">
+                <td>{{data.title}}</td>
+                <td class="locationAddress">{{data.location}}</td>
+                <td>{{data.meta.created_by}}</td>
+                <!-- <td class="locationAddress">{{data.address}}</td> -->
+                <td>{{data.phone_no}}</td>
+                <td>{{ data.start_date_time | date:'dd MMM, yy HH:mm a' }} - {{ data.end_date_time | date:'dd MMM, yy HH:mm a' }} </td>
+                <td>
+                    <label class="switch">
+                        <input *ngIf="data.status == 'active'" type="checkbox" (click)="userStatus(data._id,'inactive')"
+                            checked>
+                        <input *ngIf="data.status == 'inactive'" type="checkbox"
+                            (click)="userStatus(data._id,'active')">
+                        <span class="slider round"></span>
+                        <span class="absolute-no">NO</span>
+                    </label>
+                </td>
+                <td>
+                    <div class="editDatawarpper">
+                        <span class="viewOutline" [routerLink]="['parking-detail',data._id]"><i class="fa fa-eye" aria-hidden="true"></i></span>
+                        <span class="editOutline" data-bs-toggle="modal" data-bs-target="#exampleModal" class="editOutline" (click)="editListDetail(data, data._id)"><i class="fa fa-pencil-square-o"
+                                aria-hidden="true"></i></span>
+                        <span class="deleteOutline" (click)="deleteList(data._id)"><i class="fa fa-trash"
+                                aria-hidden="true"></i></span>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="main" style="display: flex; justify-content: space-between;">
+        <div class="page">
+            <!-- <p>Showing 1 to 10 of 57 entries</p> -->
+        </div>
+        <div class="pagination">
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+        </div>
+    </div>
+</div>
+
+<!-- modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Spot Detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCancel()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 mx-auto">
+                            <div>
+                                <div class="card-body">
+                                    <form class="form" [formGroup]="parkingDetailForm" (ngSubmit)="onSubmit()">
+                                        <div class="form-group">
+                                            <label>Title</label>
+                                            <input type="text" [(ngModel)]="title" class="form-control" formControlName="title">
+                                            <span
+                                                *ngIf="parkingDetailForm.get('title')?.invalid && (parkingDetailForm.get('title')?.dirty || parkingDetailForm.get('title')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="parkingDetailForm.get('title')?.errors?.['required']">
+                                                    Title is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Location</label>
+                                            <input type="text" [(ngModel)]="location" class="form-control" formControlName="location">
+                                            <span
+                                                *ngIf="parkingDetailForm.get('location')?.invalid && (parkingDetailForm.get('location')?.dirty || parkingDetailForm.get('location')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="parkingDetailForm.get('location')?.errors?.['required']">
+                                                    Location is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Country Code</label>
+                                            <input type="text" [(ngModel)]="country_code" class="form-control" formControlName="country_code">
+                                            <span
+                                                *ngIf="parkingDetailForm.get('country_code')?.invalid && (parkingDetailForm.get('country_code')?.dirty || parkingDetailForm.get('country_code')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="parkingDetailForm.get('country_code')?.errors?.['required']">
+                                                    Country_code is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Phone No</label>
+                                            <input type="text" [(ngModel)]="phone_no" class="form-control" formControlName="phone_no">
+                                            <span
+                                                *ngIf="parkingDetailForm.get('phone_no')?.invalid && (parkingDetailForm.get('phone_no')?.dirty || parkingDetailForm.get('phone_no')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="parkingDetailForm.get('phone_no')?.errors?.['required']">
+                                                    Phone number is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <input type="text" [(ngModel)]="address" class="form-control" formControlName="address">
+                                            <span
+                                                *ngIf="parkingDetailForm.get('address')?.invalid && (parkingDetailForm.get('address')?.dirty || parkingDetailForm.get('address')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="parkingDetailForm.get('address')?.errors?.['required']">
+                                                    Address is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <input type="text" [(ngModel)]="description" class="form-control" formControlName="description">
+                                            <span
+                                            *ngIf="parkingDetailForm.get('description')?.invalid && (parkingDetailForm.get('description')?.dirty || parkingDetailForm.get('description')?.touched)"
+                                            class="text-danger">
+                                            <span *ngIf="parkingDetailForm.get('description')?.errors?.['required']">
+                                                Description number is required.
+                                            </span>
+                                        </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Availability</label>
+                                            <input type="text" [(ngModel)]="availability" class="form-control" formControlName="availability">
+                                            <span
+                                                *ngIf="parkingDetailForm.get('availability')?.invalid && (parkingDetailForm.get('availability')?.dirty || parkingDetailForm.get('availability')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="parkingDetailForm.get('availability')?.errors?.['required']">
+                                                    availability is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Start Date Time</label>
+                                            <input type="text" [(ngModel)]="start_date_time" class="form-control" formControlName="start_date_time">
+                                            <span
+                                                *ngIf="parkingDetailForm.get('start_date_time')?.invalid && (parkingDetailForm.get('start_date_time')?.dirty || parkingDetailForm.get('start_date_time')?.touched)"
+                                                class="text-danger">
+                                                <span
+                                                    *ngIf="parkingDetailForm.get('start_date_time')?.errors?.['required']">
+                                                    Start date is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>End Date Time</label>
+                                            <input type="text" [(ngModel)]="end_date_time" class="form-control" formControlName="end_date_time">
+                                            <span
+                                                *ngIf="parkingDetailForm.get('end_date_time')?.invalid && (parkingDetailForm.get('end_date_time')?.dirty || parkingDetailForm.get('end_date_time')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="parkingDetailForm.get('end_date_time')?.errors?.['required']">
+                                                    End date is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Near By Location</label>
+                                            <input type="text" [(ngModel)]="near_by_location" class="form-control" formControlName="near_by_location">
+                                            <span
+                                                *ngIf="parkingDetailForm.get('near_by_location')?.invalid && (parkingDetailForm.get('near_by_location')?.dirty || parkingDetailForm.get('near_by_location')?.touched)"
+                                                class="text-danger">
+                                                <span
+                                                    *ngIf="parkingDetailForm.get('near_by_location')?.errors?.['required']">
+                                                    Near By locatioon is required.
+                                                </span>
+                                            </span>
+                                            <!-- <tag-input [(ngModel)]="near_by_location" class="form-control"></tag-input> -->
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Transportation</label>
+                                            <input type="text" [(ngModel)]="transportation" class="form-control" formControlName="transportation">
+                                            <span
+                                            *ngIf="parkingDetailForm.get('transportation')?.invalid && (parkingDetailForm.get('transportation')?.dirty || parkingDetailForm.get('transportation')?.touched)"
+                                            class="text-danger">
+                                            <span
+                                                *ngIf="parkingDetailForm.get('transportation')?.errors?.['required']">
+                                                Transportation is required.
+                                            </span>
+                                        </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Price</label>
+                                            <input type="text" [(ngModel)]="price" class="form-control" formControlName="price">
+                                            <span
+                                                *ngIf="parkingDetailForm.get('price')?.invalid && (parkingDetailForm.get('price')?.dirty || parkingDetailForm.get('price')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="parkingDetailForm.get('price')?.errors?.['required']">
+                                                    Price is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="dropdown">
+                                            <label>Vehicle Type</label>
+                                            <select class="form-control" formControlName="vehicle_type"  >  
+                                                <option disabled selected>Select Vehicle Type</option>   
+                                                <option *ngFor="let vehicle of vehicleList" value="{{vehicle._id}}" selected="{{ (vehicle._id == vehicle_type)?'selected':''}}">{{vehicle.title}}</option>  
+                                            </select> 
+                                            <span
+                                                *ngIf="parkingDetailForm.get('vehicle_type')?.invalid && (parkingDetailForm.get('vehicle_type')?.dirty || parkingDetailForm.get('vehicle_type')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="parkingDetailForm.get('vehicle_type')?.errors?.['required']">
+                                                    Vehicle type is required.
+                                                </span>
+                                            </span>    
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Size</label>
+                                            <select class="form-control" formControlName="size" >  
+                                                <option disabled selected>Select Vehicle Type</option>  
+                                                <option *ngFor="let sizes of vehicleSize" value="{{sizes._id}}" selected="{{ (sizes._id == size)?'selected':''}}">{{sizes.title}}</option>  
+                                            </select> 
+                                            <span
+                                            *ngIf="parkingDetailForm.get('size')?.invalid && (parkingDetailForm.get('size')?.dirty || parkingDetailForm.get('size')?.touched)"
+                                            class="text-danger">
+                                            <span *ngIf="parkingDetailForm.get('size')?.errors?.['required']">
+                                                Size is required.
+                                            </span>
+                                        </span>  
+                                        </div>
+                                        <div class="form-group" disabled="true">
+                                            <label>Images</label>
+                                            <img style="width: 80px; height: 50px; padding-left: 7px;" [src]="images" alt="parking">
+                                        </div>
+                                        <br>
+                                        <div class="form-group mt-3">
+                                            <button type="submit" class="btn btn-warning" data-bs-dismiss="modal">Upadate</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

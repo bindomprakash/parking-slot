@@ -1,0 +1,129 @@
+@import '../../../../assets/style/color-variables';
+@import '../../../../assets/style/button.scss';
+.mainSection {
+    background-color: #eee;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .loginSlotWrapper {
+        background-color: #fff;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        width: 100%;
+        max-width: 750px;
+        margin: 0 auto;
+        display: flex;
+        overflow: hidden;
+        align-items: center;
+        .loginImageWrapper {
+            img {
+                min-width: 320px;
+                min-height: 450px;
+                width: 100%;
+                text-align: center;
+                padding: inherit;
+                // filter: invert(0.05);
+            }
+        }
+        .main-container {
+            background-color: #ffff;
+            padding: 20px 30px;
+            width: 100%;
+            .logoContent {
+                img {
+                    max-width: 120px;
+                }
+            }
+            .yourPassword {
+                margin-bottom: 5px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                grid-gap: 5px;
+                // h3 {
+                //     font-size: 24px;
+                //     line-height: 26px;
+                //     font-weight: 500;
+                //     color: #000;
+                //     text-align: center;
+                //     text-transform: capitalize;
+                //     margin-bottom: 15px;
+                // }
+                img {
+                    max-width: 80px;
+                }
+                h4 {
+                    letter-spacing: 1px;
+                    text-align: center;
+                    font-size: 20px;
+                    line-height: 22px;
+                    font-weight: 500;
+                }
+            }
+            .formWrapper {
+                .userName {
+                    position: relative;
+                    .readName {
+                        position: absolute;
+                        top: 42px;
+                        right: 10px;
+                        cursor: pointer;
+                        color: #ffb706;
+                    }
+                    input {
+                        padding-right: 30px;
+                        &:focus-visible {
+                            outline: none;
+                        }
+                        &:focus {
+                            box-shadow: none;
+                            border-color: #ced4da;
+                        }
+                        &:hover {
+                            outline: 1px solid #ced4da;
+                        }
+                    }
+                    .form-label {
+                        margin-bottom: 5px !important;
+                    }
+                }
+                .loginButton {
+                    display: grid;
+                    margin-top: 25px;
+                }
+                .forgotWrapper {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    a {
+                        color: #000;
+                        text-decoration: none;
+                        margin-top: 12px;
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.spinner-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 998;
+    app-spinner {
+        width: 6rem;
+        height: 6rem;
+    }
+}

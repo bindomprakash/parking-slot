@@ -1,0 +1,17 @@
+<div class="user">
+  <h4>{{title}}</h4>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th *ngFor="let col of colDetails" scope="col">{{col | titlecase}}</th>
+        <th scope="col">Host-Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of hostList; index as i">
+        <td *ngFor="let col of colDetails">{{data[col]}}</td>
+        <td><a style="color: blue; cursor: pointer;" (click)="hostDetails(data, i)"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

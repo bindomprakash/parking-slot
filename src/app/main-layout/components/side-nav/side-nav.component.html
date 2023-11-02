@@ -1,0 +1,56 @@
+<div class="main-container">
+    <ul class="sideBar">
+        <li class="logowrapper">
+            <div class="parking-logo">
+                <!-- <h4>Parking Slots</h4> -->
+                <img src="assets/images/parkLogo.png" alt="logoImage" srcset="">
+            </div>
+        </li>
+        <li>
+            <a routerLinkActive="active" [routerLink]="['/dashboard']">
+                <i class="fa fa-tachometer sideIcon" aria-hidden="true"></i>
+                <span>
+                    Dashboard
+                </span>
+            </a>
+        </li>
+        <li>
+            <a routerLinkActive="active" [routerLink]="['/host-management']"><i class="fa fa-users sideIcon"
+                    aria-hidden="true"></i>
+                <span>
+                    Host Management
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a routerLinkActive="active" [routerLink]="['/parking-management']"><i class="fa fa-car sideIcon"
+                    aria-hidden="true"></i>
+                <span>
+                    Parking Management
+                </span>
+
+            </a>
+        </li>
+
+        <li>
+            <a routerLinkActive="active" [routerLink]="['/renter-management']"><i class="fa fa-users" aria-hidden="true"></i>
+                <span>Renter Management</span>
+            </a>
+        </li>
+
+        <!-- <li>
+            <a routerLinkActive="active" [routerLink]="['/payment-management']"><i class="fa fa-money sideIcon" aria-hidden="true"></i>
+        Payment Management
+      </a>
+        </li>  -->
+         <li>
+            <a routerLinkActive="active" [routerLink]="['/page-management']"><i class="fa fa-file-text-o sideIcon"
+                    aria-hidden="true"></i>
+                <span>Page Management</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<router-outlet></router-outlet>

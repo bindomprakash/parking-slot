@@ -1,0 +1,46 @@
+// Search-Input
+.searchField {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px;
+    background-color: #f1f3f4;
+    input {
+        padding: 5px 15px;
+        border-radius: 5px;
+        border: 1px solid #2199e8;
+        &:hover {
+            outline: 1px solid #2199e8;
+        }
+        &:focus-visible {
+            outline: none !important;
+        }
+    }
+}
+
+td {
+    overflow: hidden;
+    white-space: nowrap;
+    &.locationAddress {
+        text-overflow: ellipsis;
+        max-width: 120px;
+    }
+}
+
+.pagination {
+    pagination-controls {
+         ::ng-deep {
+            nav {
+                .ngx-pagination {
+                    li.current {
+                        background-color: #ffb706 !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+input:focus {
+    box-shadow: none;
+}

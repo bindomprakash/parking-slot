@@ -1,0 +1,41 @@
+<div *ngIf="loader" class="spinner-wrapper">
+    <app-loader></app-loader>
+</div>
+<div class="mainChartdashboard">
+    <div class="card chartOne">
+        <div class="card-body">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <span>
+                <h5 class="card-title">Renters</h5>
+                <p class="card-text">{{renters}}</p> 
+            </span>
+        </div>
+      </div>
+      <div class="card chartTwo">
+        <div class="card-body">
+            <i class="fa fa-car" aria-hidden="true"></i>
+            <span>
+                <h5 class="card-title">Spots</h5>
+                <p class="card-text">{{spots}}</p>
+            </span>
+        </div>
+      </div>
+      <div class="card chartThree">
+        <div class="card-body">
+            <i class="fa fa-th-list" aria-hidden="true"></i>
+            <span>
+                <h5 class="card-title">Hosts</h5>
+                <p class="card-text">{{hosts}}</p>
+            </span>
+        </div>
+      </div>
+      <div class="card chartFour">
+        <div class="card-body">
+            <i class="fa fa-book" aria-hidden="true"></i>
+            <span>
+                <h5 class="card-title">Booking</h5>
+                <p class="card-text">{{bokking}}</p>
+            </span>
+        </div>
+      </div>
+</div>

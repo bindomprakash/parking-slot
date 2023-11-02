@@ -1,0 +1,123 @@
+<div *ngIf="loader" class="spinner-wrapper">
+    <app-loader></app-loader>
+</div>
+<div class="user ">
+    <h4>{{title}}</h4>
+    <div class="searchField">
+        <input type="search" class="" [(ngModel)]="searchInput.name" placeholder="Search" aria-label="Search"
+            aria-describedby="search-addon" />
+    </div>
+
+    <table class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                <th scope="col" (click)="sort('name')">Name &nbsp;<i class="fa fa-sort" aria-hidden="true"></i></th>
+                <th scope="col" (click)="sort('email')">Email &nbsp;<i class="fa fa-sort" aria-hidden="true"></i></th>
+                <th scope="col" (click)="sort('phone')">Login Type &nbsp;<i class="fa fa-sort" aria-hidden="true"></i>
+                </th>
+                <th scope="col">Is Active</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                *ngFor="let data of renterListData | orderBy: orderHeader:isDesOrder | filterBy: searchInput | paginate: { itemsPerPage: 10, currentPage: page }">
+                <td>{{data.name}}</td>
+                <td>{{data.email}}</td>
+                <td>{{data.login_type}}</td>
+                <td>
+                    <label class="switch">
+                        <input *ngIf="data.status == 'active'" type="checkbox" (click)="userStatus(data._id,'inactive')"
+                            checked>
+                        <input *ngIf="data.status == 'inactive'" type="checkbox"
+                            (click)="userStatus(data._id,'active')">
+                        <span class="slider round"></span>
+                        <span class="absolute-no">NO</span>
+                    </label>
+                </td>
+                <td>
+                    <div class="editDatawarpper">
+                        <span class="viewOutline" [routerLink]="['renter-detail',data._id]"><i class="fa fa-eye"
+                                aria-hidden="true"></i></span>
+                        <span class="editOutline" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            (click)="editListDetail(data, data._id)"><i class="fa fa-pencil-square-o"
+                                aria-hidden="true"></i></span>
+                        <span class="deleteOutline" (click)="deleteList(data._id)"><i class="fa fa-trash"
+                                aria-hidden="true"></i></span>
+                    </div>
+                </td>
+            </tr>
+            <div *ngIf="(renterListData | filterBy: searchInput).length === 0">
+                No Record Match
+            </div>
+        </tbody>
+    </table>
+    <div class="main" style="display: flex; justify-content: space-between;">
+        <div class="page">
+            <!-- <p>Showing 1 to 10 of 57 entries</p> -->
+        </div>
+        <div class="pagination">
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Renter Detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="onCancel()"></button>
+            </div>
+            <div class="modal-body" *ngIf="true">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 mx-auto">
+                            <div>
+                                <div class="card-body">
+                                    <form class="form" [formGroup]="hostDetailForm" (ngSubmit)="onSubmit()">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" [(ngModel)]="name" class="form-control"
+                                                formControlName="name" placeholder="Name">
+                                            <span
+                                                *ngIf="hostDetailForm.get('name')?.invalid && (hostDetailForm.get('name')?.dirty || hostDetailForm.get('name')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="hostDetailForm.get('name')?.errors?.['required']">
+                                                    Name is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <label>Phone No</label>
+                                            <input type="number" [(ngModel)]="phone_no" class="form-control"
+                                                formControlName="phone_no" placeholder="Phone No">
+                                            <span 
+                                                *ngIf="hostDetailForm.get('phone_no')?.invalid && (hostDetailForm.get('phone_no')?.dirty || hostDetailForm.get('phone_no')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="hostDetailForm.get('phone_no')?.errors?.['required']">
+                                                    Phone number is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <button type="submit" class="btn btn-warning"
+                                                >Upadate</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="onCancel()">Close</button>
+            </div> -->
+        </div>
+    </div>
+</div>

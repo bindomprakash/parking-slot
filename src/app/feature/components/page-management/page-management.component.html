@@ -1,0 +1,182 @@
+<div *ngIf="loader" class="spinner-wrapper">
+    <app-loader></app-loader>
+</div>
+<div class="page ">
+    <h4>{{title}}</h4>
+    <div class="searchField">
+        <button type="button" [routerLink]="['addpage']" class="primaryButton">Add New
+            Page</button>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Slug</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let list of pageList | paginate: { itemsPerPage: 10, currentPage: page }">
+                <td>{{list.title}}</td>
+                <td>{{list.slug}}</td>
+                <td>{{list.status}}</td>
+                <td class="editDatawarpper">
+                    <span class="viewOutline" [routerLink]="['pagedetail',list._id]"><i class="fa fa-eye" aria-hidden="true"></i></span>
+                    <span class="editOutline" [routerLink]="['editpage',list._id]"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="main" style="display: flex; justify-content: space-between;">
+        <div class="page">
+            <!-- <p>Showing 1 to 10 of 57 entries</p> -->
+        </div>
+        <div class="pagination">
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+        </div>
+    </div>
+</div>
+
+<!-- modal -->
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div  class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    >Add New Pages</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="onCancel()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 mx-auto">
+                            <div>
+                                <div class="card-body">
+                                    <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+                                        <div class="form-group">
+                                            <label><b>Title</b></label>
+                                            <input type="text" class="form-control" formControlName="title"
+                                                placeholder="Enter Title">
+                                            <span
+                                                *ngIf="form.get('title')?.invalid && (form.get('title')?.dirty || form.get('title')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="form.get('title')?.errors?.['required']">
+                                                    Title is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <label><b>Slug</b></label>
+                                            <input type="text" class="form-control" formControlName="slug"
+                                                placeholder="Enter Slug">
+                                            <span
+                                                *ngIf="form.get('slug')?.invalid && (form.get('slug')?.dirty || form.get('slug')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="form.get('slug')?.errors?.['required']">
+                                                    Slug is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <label><b>Description</b></label>
+                                            <textarea class="form-control" formControlName="description"
+                                                placeholder="Enter Description"></textarea>
+                                            <span
+                                                *ngIf="form.get('description')?.invalid && (form.get('description')?.dirty || form.get('description')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="form.get('description')?.errors?.['required']">
+                                                    Description is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <button type="submit" class="btn btn-warning"
+                                                >Add New Page</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="onCancel()">Close</button>
+            </div> 
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="modal fade" id="exampleModals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    (click)="addPage()">Edit Page Detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="onCancel()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 mx-auto">
+                            <div>
+                                <div class="card-body">
+                                    <form class="form" [formGroup]="form" (ngSubmit)="updatePage()">
+                                        <div class="form-group">
+                                            <label><b>Title</b></label>
+                                            <input [(ngModel)]="pageTitle" type="text" class="form-control" formControlName="title"
+                                                placeholder="Enter Title">
+                                            <span
+                                                *ngIf="form.get('title')?.invalid && (form.get('title')?.dirty || form.get('title')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="form.get('title')?.errors?.['required']">
+                                                    Title is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <label><b>Slug</b></label>
+                                            <input type="text" [(ngModel)]="slug" class="form-control" formControlName="slug"
+                                                placeholder="Enter Slug">
+                                            <span
+                                                *ngIf="form.get('slug')?.invalid && (form.get('slug')?.dirty || form.get('slug')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="form.get('slug')?.errors?.['required']">
+                                                    Slug is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <label><b>Description</b></label>
+                                            <textarea class="form-control" [(ngModel)]="description" formControlName="description"
+                                                placeholder="Enter Description"></textarea>
+                                            <span
+                                                *ngIf="form.get('description')?.invalid && (form.get('description')?.dirty || form.get('description')?.touched)"
+                                                class="text-danger">
+                                                <span *ngIf="form.get('description')?.errors?.['required']">
+                                                    Description is required.
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <button type="submit" class="btn btn-warning"
+                                                >Upadate</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="onCancel()">Close</button>
+            </div> 
+        </div>
+    </div>
+</div> -->

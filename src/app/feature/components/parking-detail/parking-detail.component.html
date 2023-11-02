@@ -1,0 +1,66 @@
+<div *ngIf="loader" class="spinner-wrapper">
+    <app-loader></app-loader>
+</div>
+
+<div class="card-body">
+    <div class="headDetail">
+        <span>Spot Detail</span>
+    </div>
+    <div class="detailType">
+        <div class="nameField">
+            <label>Title</label>
+            <span class="">{{parkingListDatas.title}}</span>
+        </div>
+
+        <div class="nameField">
+            <label>Location</label>
+            <span class="">{{parkingListDatas.location}}</span>
+        </div>
+        <div class="nameField">
+            <label>Address</label>
+            <span class="">{{parkingListDatas.address}}</span>
+        </div>
+        <div class="nameField">
+            <label>Availability</label>
+            <span class="">{{parkingListDatas.availability}}</span>
+        </div>
+        <!-- <div class="nameField">
+            <label>Country Code</label>
+            <span class=""></span>
+        </div> -->
+        <div class="nameField">
+            <label>Status</label>
+            <span class="">{{parkingListDatas.status}}</span>
+        </div>
+        <div class="nameField">
+            <label>Description</label>
+            <span class="">{{parkingListDatas.description}}</span>
+        </div>
+        <div class="nameField">
+            <label>Phone No</label>
+            <span class="">+{{parkingListDatas.country_code}} {{parkingListDatas.phone_no}}</span>
+        </div>
+        <div class="nameField">
+            <label>Date & Time</label>
+            <!-- <span>{{startDate | date:'dd MMM, yy' }}<br /><p class="">({{endDate | date:'HH:mm a' }} - {{ startDate | date:'HH:mm a' }})</p> </span> -->
+            <span>{{ startDate | date:'dd MMM, yy HH:mm a' }} - {{ endDate | date:'dd MMM, yy HH:mm a' }} </span>
+        </div>
+        <div class="nameField">
+            <label>Transportation</label>
+            <span class="">{{parkingListDatas.transportation}}</span>
+        </div>
+        <div class="nameField">
+            <label>Vehicle Type</label>
+            <!-- <span class="">{{parkingListDatas.vehicle_icon}}</span> -->
+            <img style="width: 70px; height: 60px;" src="{{vihicleImg}}" alt="">
+        </div>
+        <div class="nameField">
+            <label>Price</label>
+            <span class="">${{parkingListDatas.price}}</span>
+        </div>
+        <div class="nameField">
+            <label>Size</label>
+            <span class="">{{parkingListDatas.size_title}}</span>
+        </div>
+    </div>
+</div>
